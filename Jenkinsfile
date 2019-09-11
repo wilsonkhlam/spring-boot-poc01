@@ -62,13 +62,15 @@ pipeline {
       steps {
         container('maven') {
           dir('charts/spring-boot-poc01') {
+            sh "date"
             sh "jx step changelog --version v\$(cat ../../VERSION)"
-
+            sh "date"
             // release the helm chart
             sh "jx step helm release"
-
+            sh "date"
             // promote through all 'Auto' promotion Environments
             sh "jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)"
+            sh "date"
           }
         }
       }
